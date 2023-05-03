@@ -13,7 +13,7 @@ const upload = multer({ dest: "uploads/" });
 
 router.route("/").post(upload.single("avatar"), registerUser);
 
-router.route("/email").post(emailVerification);
+router.route("/email").post(isAuthenticated, emailVerification);
 // router.post("/", registerUser);
 router.route("/login").post(login);
 router.route("/logout").post(logout);

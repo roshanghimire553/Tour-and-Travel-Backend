@@ -18,8 +18,8 @@ const bodyParser = require("body-parser");
 // app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 // used to upload file in HTTP request
-const fileUpload = require("express-fileupload");
-app.use(fileUpload());
+// const fileUpload = require("express-fileupload");
+// app.use(fileUpload());
 
 const userRoute = require("./routes/userRoute");
 

@@ -15,7 +15,8 @@ exports.emailVerification = async (req, res) => {
         pass: process.env.PASSWORD,
       },
     };
-    const { email } = req.body;
+    const { email } = req.user;
+
     let transporter = nodemailer.createTransport(config);
 
     let message = {

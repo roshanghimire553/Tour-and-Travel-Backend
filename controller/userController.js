@@ -7,13 +7,12 @@ const mailVerification = require("./mailVerification");
 
 exports.registerUser = async (req, res, next) => {
   try {
-    console.log(req.file);
-    // const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    //   folder: "avatars",
-    //   width: 150,
-    //   crop: "scale",
-    // });
-    // console.log("Here");
+    const myCloud = await cloudinary.v2.uploader.upload(req.file.path, {
+      folder: "avatars",
+      width: 150,
+      crop: "scale",
+    });
+    console.log(myCloud);
     const { name, email, password } = req.body;
     let user = await User.findOne({ email });
     if (user) {
@@ -25,10 +24,10 @@ exports.registerUser = async (req, res, next) => {
       name,
       email,
       password,
-      // profile_pic: {
-      //   public_id: myCloud.public_id,
-      //   url: myCloud.url,
-      // },
+      profile_pic: {
+        public_id: myCloud.public_id,
+        url: myCloud.secure_url,
+      },
     });
     return res.status(200).json({
       message: "User Registered",
@@ -64,14 +63,15 @@ exports.login = async (req, res, next) => {
     });
   }
   const token = user.getToken();
-  res.cookie("token", token, {
-    expires: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
-    httpOnly: true,
-  });
+  // res.json("token", token, {
+  //   expires: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+  //   httpOnly: true,
+  // });
 
   return res.status(200).json({
     success: true,
-    user,
+    // user,
+    token: token,
   });
 };
 
