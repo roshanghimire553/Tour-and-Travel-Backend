@@ -2,6 +2,10 @@ const app = require("./app");
 const connectDB = require("./config/databaseConfig");
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config/.env" });
+
+const cors = require("cors");
+app.use(cors());
+
 const cloudinary = require("cloudinary");
 const bodyParser = require("body-parser");
 

@@ -3,7 +3,12 @@ const User = require("../models/userModel");
 
 exports.isAuthenticated = async (req, res, next) => {
   try {
-    const token = req.cookies["token"];
+    let token = req.headers["authorization"];
+    if (token && token.startsWith("Bearer ")) {
+      // Remove "Bearer " from the token
+      token = token.slice(7, token.length);
+      console.log(token);
+    }
     if (!token) {
       return res.status(404).json({
         success: false,
@@ -14,8 +19,6 @@ exports.isAuthenticated = async (req, res, next) => {
     const decodedData = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decodedData.id);
     req.user = user;
-    console.log(req.user);
-
     next();
   } catch (e) {
     return res.status(500).json({

@@ -52,9 +52,13 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
 };
 
 userSchema.methods.getToken = function () {
-  const token = jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-    expiresIn: "1d",
-  });
+  const token = jwt.sign(
+    { id: this._id, role: this.role },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "1d",
+    }
+  );
   return token;
 };
 
