@@ -14,10 +14,10 @@ const upload = multer({ dest: "uploadTour/" });
 
 //create new tour
 // router.route("/").post(createTour);
-router.route("/").post(upload.single("photo"), createTour);
+router.route("/create").post(upload.single("photo"), createTour);
 
 //for updaating tours//
-router.route("/:id").put(updateTour);
+router.route("/update/:id").put(upload.single("photo"), updateTour);
 //for deleting tour
 router.route("/:id").delete(deleteTour);
 //for getting single tour

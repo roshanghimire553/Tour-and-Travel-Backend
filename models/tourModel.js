@@ -8,7 +8,6 @@ const tourSchema = new mongoose.Schema({
   city: {
     type: String,
     required: true,
-    unique: true,
   },
   address: {
     type: String,
@@ -52,10 +51,10 @@ const tourSchema = new mongoose.Schema({
       ref: "Review",
     },
   ],
-  featured: {
-    type: Boolean,
-    dafault: false,
-  },
+  // featured: {
+  //   type: Boolean,
+  //   dafault: false,
+  // },
 });
 
 module.exports = mongoose.model("Tour", tourSchema);

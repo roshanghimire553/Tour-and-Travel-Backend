@@ -7,12 +7,8 @@ exports.createTour = async (req, res, next) => {
     if (!req.file) {
       throw new Error("No file uploaded");
     }
-
-    console.log(req.file);
     const myCloud = await cloudinary.v2.uploader.upload(req.file.path, {
       folder: "Tours",
-      width: 150,
-      crop: "scale",
     });
 
     const {
@@ -25,7 +21,6 @@ exports.createTour = async (req, res, next) => {
       maxGroupSize,
       category,
       reviews,
-      featured,
     } = req.body;
 
     const tour = new Tour({
@@ -42,7 +37,6 @@ exports.createTour = async (req, res, next) => {
       maxGroupSize,
       category,
       reviews,
-      featured,
     });
 
     const savedTour = await tour.save();
@@ -58,26 +52,59 @@ exports.createTour = async (req, res, next) => {
 };
 
 exports.updateTour = async (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
+
   try {
+    const updatedData = ({
+      title,
+      city,
+      address,
+      distance,
+      desc,
+      price,
+      maxGroupSize,
+      category,
+      reviews,
+    } = req.body);
+    console.log(req.body);
+
+    // Check if a file was uploaded
+    if (req.file) {
+      const myCloud = await cloudinary.v2.uploader.upload(req.file.path, {
+        folder: "Tours",
+      });
+
+      // Update the photo property with the new file data
+      updatedData.photo = {
+        public_id: myCloud.public_id,
+        url: myCloud.secure_url,
+      };
+    }
+
     const updatedTour = await Tour.findByIdAndUpdate(
       id,
-      {
-        $set: req.body,
-      },
+      { $set: updatedData },
       { new: true }
     );
+
+    if (!updatedTour) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Tour not found" });
+    }
+
     res.status(200).json({
       success: true,
-      message: "successfully updated",
+      message: "Successfully updated",
       data: updatedTour,
     });
   } catch (err) {
-    res.status(500).json({ success: false, message: "failed to update" });
+    console.log(err);
+    res.status(500).json({ success: false, message: "Failed to update" });
   }
 };
 
-//for deleting tours card//
+//for deleting tours//
 exports.deleteTour = async (req, res) => {
   const id = req.params.id;
   try {
@@ -92,23 +119,6 @@ exports.deleteTour = async (req, res) => {
 };
 
 //for get single tour//
-
-// exports.getSingleTour = async (req, res) => {
-//   const id = req.params.id;
-//   const tour = await Tour.findById(id);
-//   res.status(200).json({
-//     success: true,
-//     message: "Tour Found",
-//     data: tour,
-//   });
-//   try {
-//   } catch (err) {
-//     res.status(404).json({
-//       success: false,
-//       message: "Not Found",
-//     });
-//   }
-// };
 
 exports.getSingleTour = async (req, res) => {
   const id = req.params.id;

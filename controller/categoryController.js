@@ -52,3 +52,18 @@ exports.getAllCategories = async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
+
+//for deleting categoryy//
+
+exports.deleteCategory = async (req, res) => {
+  const id = req.params.id;
+  try {
+    await Category.findByIdAndDelete(id);
+    res.status(200).json({
+      success: true,
+      message: "successfully deleted",
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "failed to DeleteTour" });
+  }
+};

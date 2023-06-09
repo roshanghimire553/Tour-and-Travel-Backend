@@ -27,6 +27,7 @@ app.use(bodyParser.json());
 const userRoute = require("./routes/userRoute");
 const tourRoute = require("./routes/tourRoute");
 const categoryRoute = require("./routes/categoryRoute");
+const BookingRoute = require("./routes/bookingRoutes");
 
 app.use("/api/user", userRoute);
 app.use("api/email", userRoute);
@@ -37,5 +38,9 @@ app.use("/api/tour", tourRoute);
 
 //for category//
 app.use("/api/category", categoryRoute);
+
+//for bookings//
+
+app.use("/api/Booking", BookingRoute);
 
 module.exports = app;
