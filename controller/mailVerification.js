@@ -1,11 +1,5 @@
 const nodemailer = require("nodemailer");
 
-// const dotenv = require("dotenv");
-// dotenv.config({ path: "backend/config/.env" });
-// const { EMAIL, PASSWORD } = require({ path: "backend/config/.env" });
-// import { registerUser } from "./userController";
-// import  email from ("./userController");
-
 exports.emailVerification = async (req, res) => {
   try {
     let config = await {
@@ -39,5 +33,3 @@ exports.emailVerification = async (req, res) => {
     });
   }
 };
-
-// module.exports = emailVerification;

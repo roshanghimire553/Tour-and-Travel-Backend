@@ -124,7 +124,7 @@ exports.getSingleTour = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const tour = await Tour.findById(id);
+    const tour = await Tour.findById(id).populate("reviews");
 
     if (!tour) {
       // If no tour is found, return a 404 response
@@ -154,7 +154,10 @@ exports.getSingleTour = async (req, res) => {
 
 exports.getAllTour = async (req, res) => {
   try {
-    const allTour = await Tour.find({}).populate("category");
+    const allTour = await Tour.find({})
+      .populate("category")
+      .populate("reviews");
+
     res.status(200).json({
       success: true,
       message: "Tours Found",

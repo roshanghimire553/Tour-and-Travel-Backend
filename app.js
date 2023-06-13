@@ -17,17 +17,14 @@ app.use(morgan("dev"));
 
 //body parser sends  data in request body provide in application formta such as json
 const bodyParser = require("body-parser");
-// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-// used to upload file in HTTP request
-// const fileUpload = require("express-fileupload");
-// app.use(fileUpload());
 
 //user API//
 const userRoute = require("./routes/userRoute");
 const tourRoute = require("./routes/tourRoute");
 const categoryRoute = require("./routes/categoryRoute");
 const BookingRoute = require("./routes/bookingRoutes");
+const ReviewRoute = require("./routes/ratingRoute");
 
 app.use("/api/user", userRoute);
 app.use("api/email", userRoute);
@@ -42,5 +39,9 @@ app.use("/api/category", categoryRoute);
 //for bookings//
 
 app.use("/api/Booking", BookingRoute);
+
+//for reviews //
+
+app.use("/api/Review", ReviewRoute);
 
 module.exports = app;
