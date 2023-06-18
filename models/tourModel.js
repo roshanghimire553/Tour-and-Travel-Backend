@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const tourSchema = new mongoose.Schema({
+  // _id: {
+  //   type: mongoose.Types.ObjectId,
+  //   required: true,
+  // },
   title: {
     type: String,
     required: true,
@@ -44,6 +48,12 @@ const tourSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "Category",
   },
+  days: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Day",
+    },
+  ],
 
   reviews: [
     {
@@ -51,10 +61,6 @@ const tourSchema = new mongoose.Schema({
       ref: "Review",
     },
   ],
-  // featured: {
-  //   type: Boolean,
-  //   dafault: false,
-  // },
 });
 
 module.exports = mongoose.model("Tour", tourSchema);

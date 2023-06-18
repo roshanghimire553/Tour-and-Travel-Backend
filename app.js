@@ -25,6 +25,8 @@ const tourRoute = require("./routes/tourRoute");
 const categoryRoute = require("./routes/categoryRoute");
 const BookingRoute = require("./routes/bookingRoutes");
 const ReviewRoute = require("./routes/ratingRoute");
+const dayRoute = require("./routes/daysRoute");
+const contactRoute = require("./routes/contactUsRoutes");
 
 app.use("/api/user", userRoute);
 app.use("api/email", userRoute);
@@ -43,5 +45,12 @@ app.use("/api/Booking", BookingRoute);
 //for reviews //
 
 app.use("/api/Review", ReviewRoute);
+
+//for days//
+app.use("/api/Days", dayRoute);
+
+//for contactUs route//
+
+app.use("/api/ContactUs", contactRoute);
 
 module.exports = app;

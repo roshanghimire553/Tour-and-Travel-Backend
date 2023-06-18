@@ -1,4 +1,5 @@
 const Booking = require("../models/bookingModel");
+const User = require("../models/userModel");
 
 // Create a new booking
 exports.createBooking = async (req, res) => {
@@ -74,5 +75,83 @@ exports.deleteBooking = async (req, res) => {
     });
   } catch (err) {
     return res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+//for approving booking//
+
+exports.approveBooking = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const booking = await Booking.findById(id);
+
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: "Booking not found",
+      });
+    }
+
+    // Update the booking status to 'approved'
+    booking.status = "approved";
+    await booking.save();
+
+    return res.json({
+      success: true,
+      message: "Booking approved successfully",
+      data: booking,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+//booking history  by user id//
+
+exports.getBookingHistory = async (req, res) => {
+  // Check if user is logged in
+  if (!req.user) {
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized access",
+    });
+  }
+
+  const userEmail = req.user.email; // Assuming the user email is stored in the 'email' field of the authenticated user object
+
+  try {
+    const user = await User.findOne({ email: userEmail });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const bookings = await Booking.find({ userEmail });
+
+    if (!bookings || bookings.length === 0) {
+      return res.status(200).json({
+        success: true,
+        message: "No bookings found for the user",
+        data: [],
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: bookings,
+      message: "Booking history found",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };

@@ -20,6 +20,7 @@ exports.createTour = async (req, res, next) => {
       price,
       maxGroupSize,
       category,
+      days,
       reviews,
     } = req.body;
 
@@ -36,6 +37,7 @@ exports.createTour = async (req, res, next) => {
       price,
       maxGroupSize,
       category,
+      days,
       reviews,
     });
 
@@ -64,6 +66,7 @@ exports.updateTour = async (req, res) => {
       price,
       maxGroupSize,
       category,
+      days,
       reviews,
     } = req.body);
     console.log(req.body);
@@ -124,7 +127,7 @@ exports.getSingleTour = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const tour = await Tour.findById(id).populate("reviews");
+    const tour = await Tour.findById(id).populate("reviews").populate("days");
 
     if (!tour) {
       // If no tour is found, return a 404 response
@@ -156,6 +159,7 @@ exports.getAllTour = async (req, res) => {
   try {
     const allTour = await Tour.find({})
       .populate("category")
+      .populate("days")
       .populate("reviews");
 
     res.status(200).json({
@@ -171,49 +175,20 @@ exports.getAllTour = async (req, res) => {
   }
 };
 
-exports.searchTour = async (req, res) => {
-  try {
-    const allTour = await Tour.find({});
-    console.log(city);
-    const { city, distance, maxGroupSize } = req.params;
-    res.json(city);
-    return;
-    res.status(200).json({
-      success: true,
-      message: "Tours Found",
-      data: allTour,
-      city: city,
-      distance: distance,
-      maxGroupSize: maxGroupSize,
-    });
-  } catch (err) {
-    res.status(404).json({
-      success: false,
-      message: "Not Found",
-    });
-  }
-};
-// getting search tours//
-
-// exports.getTourBySearch = async (req, res) => {
-//   //here 'i' means case sensitive//
-//   // const city = await new RegExp(req.query.city, "i");
-//   const city = new RegExp(req.query.city, "i").toString();
-//   console.log(req.params);
-//   return;
-//   const distance = parseInt(req.query.distance);
-//   const maxGroupSize = parseInt(req.query.maxGroupSize);
-
+// exports.searchTour = async (req, res) => {
 //   try {
-//     const searchTour = await Tour.find({
-//       city,
-//       distance: { $gte: distance },
-//       maxGroupSize: { $gte: maxGroupSize },
-//     });
+//     const allTour = await Tour.find({});
+//     console.log(city);
+//     const { city, distance, maxGroupSize } = req.params;
+//     res.json(city);
+//     return;
 //     res.status(200).json({
 //       success: true,
 //       message: "Tours Found",
-//       data: searchTour,
+//       data: allTour,
+//       city: city,
+//       distance: distance,
+//       maxGroupSize: maxGroupSize,
 //     });
 //   } catch (err) {
 //     res.status(404).json({
@@ -222,3 +197,56 @@ exports.searchTour = async (req, res) => {
 //     });
 //   }
 // };
+
+// getting search tours//
+
+// exports.getTourBySearch = async (req, res) => {
+//   const { city, distance, maxGroupSize } = req.query;
+
+//   try {
+//     const searchTour = await Tour.find({
+//       city: { $regex: new RegExp(city, "i") },
+//       distance: { $gte: parseInt(distance) },
+//       maxGroupSize: { $gte: parseInt(maxGroupSize) },
+//     });
+
+//     res.status(200).json({
+//       success: true,
+//       message: "Tours Found",
+//       data: searchTour,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       message: "Internal Server Error",
+//       error: error.message,
+//     });
+//   }
+// };
+
+exports.getTourBySearch = async (req, res) => {
+  const city = req.query.city;
+  const distance = parseInt(req.query.distance);
+  const maxGroupSize = parseInt(req.query.maxGroupSize);
+
+  try {
+    const searchTour = await Tour.find({
+      city: { $regex: new RegExp(city, "i") },
+      distance: { $gte: distance },
+      maxGroupSize: { $gte: maxGroupSize },
+    }).lean(); // Add .lean() to return plain JavaScript objects instead of Mongoose documents
+
+    res.status(200).json({
+      success: true,
+      message: "Tours Found",
+      data: searchTour,
+    });
+  } catch (err) {
+    res.status(500).json({
+      // Change the status code to 500 for internal server error
+      success: false,
+      message: "Internal Server Error",
+      error: err.message,
+    });
+  }
+};

@@ -6,7 +6,6 @@ const {
   getSingleTour,
   getAllTour,
   getTourBySearch,
-  searchTour,
 } = require("../controller/tourController");
 const router = express.Router();
 const multer = require("multer");
@@ -26,7 +25,7 @@ router.route("/:id").get(getSingleTour);
 router.route("/").get(getAllTour);
 
 //get tour by search//
-router.route("/search").get(searchTour);
+router.route("/search").post(getTourBySearch);
 // router.route("/SearchTour").get(getTourBySearch);
 
 module.exports = router;
