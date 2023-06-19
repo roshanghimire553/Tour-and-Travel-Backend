@@ -38,6 +38,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
+  // searchHistory: {
+  //   type: Array,
+  //   default: [],
+  // },
 });
 
 userSchema.pre("save", async function (next) {

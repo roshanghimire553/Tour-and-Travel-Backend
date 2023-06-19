@@ -6,9 +6,11 @@ const {
   getSingleTour,
   getAllTour,
   getTourBySearch,
+  getFilteredAndSortedTours,
 } = require("../controller/tourController");
 const router = express.Router();
 const multer = require("multer");
+const { isAuthenticated } = require("../middleware/auth");
 const upload = multer({ dest: "uploadTour/" });
 
 //create new tour
@@ -27,5 +29,8 @@ router.route("/").get(getAllTour);
 //get tour by search//
 router.route("/search").post(getTourBySearch);
 // router.route("/SearchTour").get(getTourBySearch);
+
+//for  implementing search alogirith types is filtering and sorting//
+router.route("/searchAlgorithm").post(getFilteredAndSortedTours);
 
 module.exports = router;

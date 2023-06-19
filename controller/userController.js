@@ -173,3 +173,36 @@ exports.updateUserRole = async (req, res, next) => {
     user,
   });
 };
+
+//fo getting user search hisoty//
+
+// exports.searchHistoryController = {
+//   store: async (req, res) => {
+//     try {
+//       const { userId } = req.params.id;
+//       const { searchHistory } = req.body;
+
+//       // Find the user by their ID
+//       const user = await User.findById(userId);
+
+//       if (!user) {
+//         return res
+//           .status(404)
+//           .json({ success: false, message: "User not found" });
+//       }
+
+//       // Update the search history of the user
+//       user.searchHistory = searchHistory;
+//       await user.save();
+
+//       res
+//         .status(200)
+//         .json({ success: true, message: "Search history stored successfully" });
+//     } catch (error) {
+//       console.error(error);
+//       res
+//         .status(500)
+//         .json({ success: false, message: "Failed to store search history" });
+//     }
+//   },
+// };

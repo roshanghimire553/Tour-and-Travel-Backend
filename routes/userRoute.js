@@ -12,6 +12,7 @@ const {
   getAllUsers,
   getUser,
   deleteUser,
+  searchHistoryController,
 } = require("../controller/userController");
 const { emailVerification } = require("../controller/mailVerification");
 
@@ -47,5 +48,10 @@ router
 router
   .route("/deleteUsers/:id")
   .delete(isAuthenticated, authorizedRole("admin"), deleteUser);
+
+//for search history//
+// router
+//   .route("/:userId/searchHistory")
+//   .post(isAuthenticated, searchHistoryController.store);
 
 module.exports = router;

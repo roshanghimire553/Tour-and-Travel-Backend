@@ -127,7 +127,10 @@ exports.getSingleTour = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const tour = await Tour.findById(id).populate("reviews").populate("days");
+    const tour = await Tour.findById(id)
+      .populate("reviews")
+      .populate("days")
+      .populate("category");
 
     if (!tour) {
       // If no tour is found, return a 404 response
@@ -175,54 +178,7 @@ exports.getAllTour = async (req, res) => {
   }
 };
 
-// exports.searchTour = async (req, res) => {
-//   try {
-//     const allTour = await Tour.find({});
-//     console.log(city);
-//     const { city, distance, maxGroupSize } = req.params;
-//     res.json(city);
-//     return;
-//     res.status(200).json({
-//       success: true,
-//       message: "Tours Found",
-//       data: allTour,
-//       city: city,
-//       distance: distance,
-//       maxGroupSize: maxGroupSize,
-//     });
-//   } catch (err) {
-//     res.status(404).json({
-//       success: false,
-//       message: "Not Found",
-//     });
-//   }
-// };
-
-// getting search tours//
-
-// exports.getTourBySearch = async (req, res) => {
-//   const { city, distance, maxGroupSize } = req.query;
-
-//   try {
-//     const searchTour = await Tour.find({
-//       city: { $regex: new RegExp(city, "i") },
-//       distance: { $gte: parseInt(distance) },
-//       maxGroupSize: { $gte: parseInt(maxGroupSize) },
-//     });
-
-//     res.status(200).json({
-//       success: true,
-//       message: "Tours Found",
-//       data: searchTour,
-//     });
-//   } catch (error) {
-//     res.status(500).json({
-//       success: false,
-//       message: "Internal Server Error",
-//       error: error.message,
-//     });
-//   }
-// };
+//search query for the user basesd on the user search//
 
 exports.getTourBySearch = async (req, res) => {
   const city = req.query.city;
@@ -248,5 +204,53 @@ exports.getTourBySearch = async (req, res) => {
       message: "Internal Server Error",
       error: err.message,
     });
+  }
+};
+
+//for  implementing search alogirith types is filtering and sorting//
+
+/*The basic filtering algorithm used in the provided code snippet can be categorized 
+as a "Search Algorithm". It performs a search operation on the collection of tours 
+based on the specified filter parameters (priceRange, categoryId, city)
+ and applies sorting based on the sortBy parameter.*/
+
+/*In terms of algorithm and type, this code implements a basic filtering 
+ and sorting algorithm using MongoDB's query language. It leverages 
+ the filtering capabilities provided by MongoDB's $gte, $lte, 
+ and $regex operators, as well as the sorting functionality offered by the .sort method.*/
+
+exports.getFilteredAndSortedTours = async (req, res) => {
+  try {
+    const { priceRange, categoryId, city, sortBy } = req.query;
+
+    const query = {};
+
+    if (priceRange) {
+      const [minPrice, maxPrice] = priceRange.split("-");
+      query.price = { $gte: parseInt(minPrice), $lte: parseInt(maxPrice) };
+    }
+
+    if (categoryId) {
+      query.category = categoryId; // Use categoryId instead of category
+    }
+
+    if (city) {
+      query.city = { $regex: city, $options: "i" };
+    }
+
+    let sort = {};
+
+    if (sortBy === "priceLowToHigh") {
+      sort = { price: 1 };
+    } else if (sortBy === "priceHighToLow") {
+      sort = { price: -1 };
+    }
+
+    const tours = await Tour.find(query).sort(sort);
+
+    res.json(tours);
+  } catch (error) {
+    console.log("Error fetching tours:", error);
+    res.status(500).json({ error: "An error occurred while fetching tours" });
   }
 };
