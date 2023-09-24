@@ -1,4 +1,6 @@
 const User = require("../models/userModel");
+const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
 
 const cloudinary = require("cloudinary");
 const mailVerification = require("./mailVerification");
@@ -7,12 +9,6 @@ const mailVerification = require("./mailVerification");
 
 exports.registerUser = async (req, res, next) => {
   try {
-    // const myCloud = await cloudinary.v2.uploader.upload(req.file.path, {
-    //   folder: "avatars",
-    //   width: 150,
-    //   crop: "scale",
-    // });
-    // console.log(myCloud);
     const { name, email, password } = req.body;
     let user = await User.findOne({ email });
     if (user) {
@@ -24,13 +20,10 @@ exports.registerUser = async (req, res, next) => {
       name,
       email,
       password,
-      // profile_pic: {
-      //   public_id: myCloud.public_id,
-      //   url: myCloud.secure_url,
-      // },
     });
-    return res.status(200).json({
-      message: "User Registered",
+    await mailVerification.emailVerification(user.email);
+    res.status(200).json({
+      message: "User registered and welcome email sent",
       user,
     });
   } catch (error) {
@@ -109,7 +102,6 @@ exports.login = async (req, res, next) => {
 
 exports.me = async (req, res, next) => {
   const { email } = req.user;
-  console.log(req.user);
   res.json(req.user);
 };
 
@@ -174,35 +166,55 @@ exports.updateUserRole = async (req, res, next) => {
   });
 };
 
-//fo getting user search hisoty//
+//for changing user password//
 
-// exports.searchHistoryController = {
-//   store: async (req, res) => {
-//     try {
-//       const { userId } = req.params.id;
-//       const { searchHistory } = req.body;
+exports.changePassword = async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
 
-//       // Find the user by their ID
-//       const user = await User.findById(userId);
+  try {
+    const user = await User.findById(req.params.id);
+    const isPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
 
-//       if (!user) {
-//         return res
-//           .status(404)
-//           .json({ success: false, message: "User not found" });
-//       }
+    if (!isPasswordCorrect) {
+      return res.status(401).json({ message: "Invalid old password" });
+    }
 
-//       // Update the search history of the user
-//       user.searchHistory = searchHistory;
-//       await user.save();
+    if (oldPassword === newPassword) {
+      return res
+        .status(401)
+        .json({ message: " old password and new password matched" });
+    }
 
-//       res
-//         .status(200)
-//         .json({ success: true, message: "Search history stored successfully" });
-//     } catch (error) {
-//       console.error(error);
-//       res
-//         .status(500)
-//         .json({ success: false, message: "Failed to store search history" });
-//     }
-//   },
-// };
+    user.password = newPassword;
+    await user.save();
+
+    // Send email notification
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: user.email,
+      subject: "Password Change Notification[Tours and Travel]",
+      html: "<b>Your password has been successfully changed.<br>",
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending email:", error);
+        // Even if email sending fails, continue with the response
+        res.status(200).json({ message: "Password changed successfully" });
+      } else {
+        console.log("Email sent:", info.response);
+        res.status(200).json({ message: "Password changed successfully" });
+      }
+    });
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};

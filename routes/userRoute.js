@@ -13,6 +13,7 @@ const {
   getUser,
   deleteUser,
   searchHistoryController,
+  changePassword,
 } = require("../controller/userController");
 const { emailVerification } = require("../controller/mailVerification");
 
@@ -48,6 +49,9 @@ router
 router
   .route("/deleteUsers/:id")
   .delete(isAuthenticated, authorizedRole("admin"), deleteUser);
+
+//for changing password//
+router.route("/changePassword/:id").put(changePassword);
 
 //for search history//
 // router

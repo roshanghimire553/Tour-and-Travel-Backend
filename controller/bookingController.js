@@ -1,5 +1,6 @@
 const Booking = require("../models/bookingModel");
 const User = require("../models/userModel");
+const mailVerification = require("./mailVerification");
 
 // Create a new booking
 exports.createBooking = async (req, res) => {
@@ -97,9 +98,44 @@ exports.approveBooking = async (req, res) => {
     booking.status = "approved";
     await booking.save();
 
+    // Send email verification
+    await mailVerification.ApprovedBookingEmailSent(booking.userEmail);
+
+    // Send a single response indicating success
+    return res.status(200).json({
+      success: true,
+      message: "Booking approved successfully and Email sent",
+      data: booking,
+    });
+  } catch (error) {
+    console.error(error); // Log the error for debugging purposes
+
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while processing your request",
+    });
+  }
+};
+
+//for approving payment//
+exports.approvePayment = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const booking = await Booking.findById(id);
+
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: "booking not found",
+      });
+    }
+
+    //update the payment status to "paid"//
+    booking.paymentStatus = "paid";
+    await booking.save();
     return res.json({
       success: true,
-      message: "Booking approved successfully",
+      message: "Payment approved successfully",
       data: booking,
     });
   } catch (error) {
@@ -147,6 +183,33 @@ exports.getBookingHistory = async (req, res) => {
       success: true,
       data: bookings,
       message: "Booking history found",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+//update booking status//
+
+exports.updateBooking = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const updatedBooking = await Booking.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    if (!updatedBooking) {
+      return res.status(404).json({
+        success: false,
+        message: "Booking not found",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Updated successfully",
+      booking: updatedBooking,
     });
   } catch (error) {
     return res.status(500).json({

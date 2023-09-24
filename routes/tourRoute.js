@@ -11,6 +11,9 @@ const {
 const router = express.Router();
 const multer = require("multer");
 const { isAuthenticated } = require("../middleware/auth");
+const {
+  recommendTourPackages,
+} = require("../controller/recommendedController");
 const upload = multer({ dest: "uploadTour/" });
 
 //create new tour
@@ -32,5 +35,9 @@ router.route("/search").post(getTourBySearch);
 
 //for  implementing search alogirith types is filtering and sorting//
 router.route("/searchAlgorithm").post(getFilteredAndSortedTours);
+
+//for recommednded tour packages//
+
+router.route("/sorts/hello").get(recommendTourPackages);
 
 module.exports = router;

@@ -27,6 +27,10 @@ const BookingRoute = require("./routes/bookingRoutes");
 const ReviewRoute = require("./routes/ratingRoute");
 const dayRoute = require("./routes/daysRoute");
 const contactRoute = require("./routes/contactUsRoutes");
+const chatBot = require("./routes/chatBotRoutes");
+
+//for recommended algorithm//
+const recommended = require("./routes/tourRoute");
 
 app.use("/api/user", userRoute);
 app.use("api/email", userRoute);
@@ -52,5 +56,13 @@ app.use("/api/Days", dayRoute);
 //for contactUs route//
 
 app.use("/api/ContactUs", contactRoute);
+
+//for chat bot//
+
+app.use("/api/chatBot", chatBot);
+
+//for recommended algorithm according to ratings//
+
+app.use("/api/recommended", recommended);
 
 module.exports = app;

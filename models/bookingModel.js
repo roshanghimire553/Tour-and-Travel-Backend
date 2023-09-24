@@ -33,18 +33,11 @@ const bookingSchema = new mongoose.Schema({
     default: "pending",
   },
 
-  // bookAt: {
-  //   type: String,
-  //   required: true,
-  //   validate: {
-  //     validator: function (value) {
-  //       // Check if the date is in the future
-  //       const today = new Date().toISOString().split("T")[0];
-  //       return value > today;
-  //     },
-  //     message: "Booking date must be in the future",
-  //   },
-  // },
+  paymentStatus: {
+    type: String,
+    enum: ["pending", "approved", "pay", "paid"],
+    default: "pending",
+  },
   totalPrice: {
     type: Number,
     require: true,

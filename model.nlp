@@ -1,0 +1,949 @@
+{
+  "settings": {
+    "languages": [
+      "en"
+    ],
+    "tag": "nlp",
+    "threshold": 0.5,
+    "autoLoad": true,
+    "autoSave": true,
+    "modelFileName": "model.nlp",
+    "executeActionsBeforeAnswers": false,
+    "calculateSentiment": true
+  },
+  "nluManager": {
+    "settings": {
+      "tag": "nlu-manager"
+    },
+    "locales": [
+      "en"
+    ],
+    "languageNames": {},
+    "domainManagers": {
+      "en": {
+        "settings": {
+          "locale": "en",
+          "trainByDomain": false,
+          "tag": "domain-manager-en",
+          "nluByDomain": {
+            "default": {
+              "className": "NeuralNlu",
+              "settings": {}
+            }
+          },
+          "useStemDict": true
+        },
+        "stemDict": {
+          "hello": {
+            "intent": "greeting",
+            "domain": "default"
+          },
+          "hi": {
+            "intent": "greeting",
+            "domain": "default"
+          },
+          "are,how,you": {
+            "intent": "health",
+            "domain": "default"
+          },
+          "fine": {
+            "intent": "reply",
+            "domain": "default"
+          },
+          "thankyou": {
+            "intent": "finish_conv",
+            "domain": "default"
+          },
+          "about,me,tell,tour,your": {
+            "intent": "tour_info",
+            "domain": "default"
+          },
+          "destin,do,offer,what,you": {
+            "intent": "tour_info",
+            "domain": "default"
+          },
+          "a,can,packag,recommend,vacat,you": {
+            "intent": "tour_recommendation",
+            "domain": "default"
+          },
+          "best,give,me,to,tour,visit": {
+            "intent": "best_tour",
+            "domain": "default"
+          },
+          "a,book,can,how,i,tour": {
+            "intent": "tour_booking",
+            "domain": "default"
+          },
+          "a,book,can,cancel,how,i,tour": {
+            "intent": "tour_cancel",
+            "domain": "default"
+          },
+          "can,compani,contact,number,provid,you,your": {
+            "intent": "contact_info",
+            "domain": "default"
+          }
+        },
+        "intentDict": {
+          "greeting": "default",
+          "health": "default",
+          "reply": "default",
+          "finish_conv": "default",
+          "tour_info": "default",
+          "tour_recommendation": "default",
+          "best_tour": "default",
+          "tour_booking": "default",
+          "tour_cancel": "default",
+          "contact_info": "default"
+        },
+        "sentences": [
+          {
+            "domain": "default",
+            "utterance": "hello",
+            "intent": "greeting"
+          },
+          {
+            "domain": "default",
+            "utterance": "hi",
+            "intent": "greeting"
+          },
+          {
+            "domain": "default",
+            "utterance": "how are you",
+            "intent": "health"
+          },
+          {
+            "domain": "default",
+            "utterance": "fine ",
+            "intent": "reply"
+          },
+          {
+            "domain": "default",
+            "utterance": "thankyou ",
+            "intent": "finish_conv"
+          },
+          {
+            "domain": "default",
+            "utterance": "tell me about your tours",
+            "intent": "tour_info"
+          },
+          {
+            "domain": "default",
+            "utterance": "what destinations do you offer",
+            "intent": "tour_info"
+          },
+          {
+            "domain": "default",
+            "utterance": "can you recommend a vacation package",
+            "intent": "tour_recommendation"
+          },
+          {
+            "domain": "default",
+            "utterance": "give me best tour to visit",
+            "intent": "best_tour"
+          },
+          {
+            "domain": "default",
+            "utterance": "how can I book a tour",
+            "intent": "tour_booking"
+          },
+          {
+            "domain": "default",
+            "utterance": "how can I cancel a tour booking",
+            "intent": "tour_cancel"
+          },
+          {
+            "domain": "default",
+            "utterance": "can you provide your company contact number",
+            "intent": "contact_info"
+          }
+        ],
+        "domains": {
+          "master_domain": {
+            "settings": {
+              "locale": "en",
+              "tag": "nlu-en",
+              "keepStopwords": true,
+              "nonefeatureValue": 1,
+              "nonedeltaMultiplier": 1.2,
+              "spellCheck": false,
+              "spellCheckDistance": 1,
+              "filterZeros": true,
+              "log": true
+            },
+            "features": {
+              "hello": 1,
+              "hi": 1,
+              "how": 1,
+              "are": 1,
+              "you": 1,
+              "fine": 1,
+              "thankyou": 1,
+              "tell": 1,
+              "me": 1,
+              "about": 1,
+              "your": 1,
+              "tour": 1,
+              "what": 1,
+              "destin": 1,
+              "do": 1,
+              "offer": 1,
+              "can": 1,
+              "recommend": 1,
+              "a": 1,
+              "vacat": 1,
+              "packag": 1,
+              "give": 1,
+              "best": 1,
+              "to": 1,
+              "visit": 1,
+              "i": 1,
+              "book": 1,
+              "cancel": 1,
+              "provid": 1,
+              "compani": 1,
+              "contact": 1,
+              "number": 1
+            },
+            "intents": {
+              "greeting": 1,
+              "health": 1,
+              "reply": 1,
+              "finish_conv": 1,
+              "tour_info": 1,
+              "tour_recommendation": 1,
+              "best_tour": 1,
+              "tour_booking": 1,
+              "tour_cancel": 1,
+              "contact_info": 1
+            },
+            "intentFeatures": {
+              "greeting": {
+                "hello": 1,
+                "hi": 1
+              },
+              "health": {
+                "how": 1,
+                "are": 1,
+                "you": 1
+              },
+              "reply": {
+                "fine": 1
+              },
+              "finish_conv": {
+                "thankyou": 1
+              },
+              "tour_info": {
+                "tell": 1,
+                "me": 1,
+                "about": 1,
+                "your": 1,
+                "tour": 1,
+                "what": 1,
+                "destin": 1,
+                "do": 1,
+                "you": 1,
+                "offer": 1
+              },
+              "tour_recommendation": {
+                "can": 1,
+                "you": 1,
+                "recommend": 1,
+                "a": 1,
+                "vacat": 1,
+                "packag": 1
+              },
+              "best_tour": {
+                "give": 1,
+                "me": 1,
+                "best": 1,
+                "tour": 1,
+                "to": 1,
+                "visit": 1
+              },
+              "tour_booking": {
+                "how": 1,
+                "can": 1,
+                "i": 1,
+                "book": 1,
+                "a": 1,
+                "tour": 1
+              },
+              "tour_cancel": {
+                "how": 1,
+                "can": 1,
+                "i": 1,
+                "cancel": 1,
+                "a": 1,
+                "tour": 1,
+                "book": 1
+              },
+              "contact_info": {
+                "can": 1,
+                "you": 1,
+                "provid": 1,
+                "your": 1,
+                "compani": 1,
+                "contact": 1,
+                "number": 1
+              }
+            },
+            "featuresToIntent": {
+              "hello": [
+                "greeting"
+              ],
+              "hi": [
+                "greeting"
+              ],
+              "how": [
+                "health",
+                "tour_booking",
+                "tour_cancel"
+              ],
+              "are": [
+                "health"
+              ],
+              "you": [
+                "health",
+                "tour_info",
+                "tour_recommendation",
+                "contact_info"
+              ],
+              "fine": [
+                "reply"
+              ],
+              "thankyou": [
+                "finish_conv"
+              ],
+              "tell": [
+                "tour_info"
+              ],
+              "me": [
+                "tour_info",
+                "best_tour"
+              ],
+              "about": [
+                "tour_info"
+              ],
+              "your": [
+                "tour_info",
+                "contact_info"
+              ],
+              "tour": [
+                "tour_info",
+                "best_tour",
+                "tour_booking",
+                "tour_cancel"
+              ],
+              "what": [
+                "tour_info"
+              ],
+              "destin": [
+                "tour_info"
+              ],
+              "do": [
+                "tour_info"
+              ],
+              "offer": [
+                "tour_info"
+              ],
+              "can": [
+                "tour_recommendation",
+                "tour_booking",
+                "tour_cancel",
+                "contact_info"
+              ],
+              "recommend": [
+                "tour_recommendation"
+              ],
+              "a": [
+                "tour_recommendation",
+                "tour_booking",
+                "tour_cancel"
+              ],
+              "vacat": [
+                "tour_recommendation"
+              ],
+              "packag": [
+                "tour_recommendation"
+              ],
+              "give": [
+                "best_tour"
+              ],
+              "best": [
+                "best_tour"
+              ],
+              "to": [
+                "best_tour"
+              ],
+              "visit": [
+                "best_tour"
+              ],
+              "i": [
+                "tour_booking",
+                "tour_cancel"
+              ],
+              "book": [
+                "tour_booking",
+                "tour_cancel"
+              ],
+              "cancel": [
+                "tour_cancel"
+              ],
+              "provid": [
+                "contact_info"
+              ],
+              "compani": [
+                "contact_info"
+              ],
+              "contact": [
+                "contact_info"
+              ],
+              "number": [
+                "contact_info"
+              ]
+            },
+            "neuralNetwork": {
+              "settings": {
+                "locale": "en",
+                "tag": "nlu-en",
+                "keepStopwords": true,
+                "nonefeatureValue": 1,
+                "nonedeltaMultiplier": 1.2,
+                "spellCheck": false,
+                "spellCheckDistance": 1,
+                "filterZeros": true,
+                "log": true
+              },
+              "features": [
+                "hello",
+                "hi",
+                "how",
+                "are",
+                "you",
+                "fine",
+                "thankyou",
+                "tell",
+                "me",
+                "about",
+                "your",
+                "tour",
+                "what",
+                "destin",
+                "do",
+                "offer",
+                "can",
+                "recommend",
+                "a",
+                "vacat",
+                "packag",
+                "give",
+                "best",
+                "to",
+                "visit",
+                "i",
+                "book",
+                "cancel",
+                "provid",
+                "compani",
+                "contact",
+                "number"
+              ],
+              "intents": [
+                "greeting",
+                "health",
+                "reply",
+                "finish_conv",
+                "tour_info",
+                "tour_recommendation",
+                "best_tour",
+                "tour_booking",
+                "tour_cancel",
+                "contact_info"
+              ],
+              "perceptrons": [
+                [
+                  10.051325798034668,
+                  10.04812240600586,
+                  -1.2266497611999512,
+                  -0.9972225427627563,
+                  -2.030377149581909,
+                  -4.190896511077881,
+                  -4.185085773468018,
+                  -0.5713530778884888,
+                  -1.0445033311843872,
+                  -0.5713530778884888,
+                  -0.7498635649681091,
+                  -1.2730671167373657,
+                  -0.5449232459068298,
+                  -0.5449232459068298,
+                  -0.5449232459068298,
+                  -0.5449232459068298,
+                  -0.7159001231193542,
+                  -0.3088308274745941,
+                  -0.5373929738998413,
+                  -0.3088308274745941,
+                  -0.3088308274745941,
+                  -0.4731355607509613,
+                  -0.4731355607509613,
+                  -0.4731355607509613,
+                  -0.4731355607509613,
+                  -0.2285519391298294,
+                  -0.2285519391298294,
+                  -0.0323224775493145,
+                  -0.17849788069725037,
+                  -0.17849788069725037,
+                  -0.17849788069725037,
+                  -0.17849788069725037,
+                  4.210157439328833
+                ],
+                [
+                  -0.4480292797088623,
+                  -0.4477251470088959,
+                  4.744724273681641,
+                  5.496817111968994,
+                  3.59623646736145,
+                  -0.46665215492248535,
+                  -0.4613911807537079,
+                  -0.05043630674481392,
+                  -0.10230427980422974,
+                  -0.05043630674481392,
+                  -0.5420620441436768,
+                  -0.875302255153656,
+                  -1.0116701126098633,
+                  -1.0116701126098633,
+                  -1.0116701126098633,
+                  -1.0116701126098633,
+                  -1.6408748626708984,
+                  -0.4182209074497223,
+                  -1.1746690273284912,
+                  -0.4182209074497223,
+                  -0.4182209074497223,
+                  -0.03211408853530884,
+                  -0.03211408853530884,
+                  -0.03211408853530884,
+                  -0.03211408853530884,
+                  -0.7520446181297302,
+                  -0.7520446181297302,
+                  -0.23367853462696075,
+                  -0.46609440445899963,
+                  -0.46609440445899963,
+                  -0.46609440445899963,
+                  -0.46609440445899963,
+                  0.44791034025357873
+                ],
+                [
+                  -2.0896215438842773,
+                  -2.0862152576446533,
+                  -0.6075149178504944,
+                  -0.4759793281555176,
+                  -1.0182751417160034,
+                  12.143776893615723,
+                  -2.0941219329833984,
+                  -0.2816323935985565,
+                  -0.5170942544937134,
+                  -0.2816323935985565,
+                  -0.3783580958843231,
+                  -0.6486299633979797,
+                  -0.2856197953224182,
+                  -0.2856197953224182,
+                  -0.2856197953224182,
+                  -0.2856197953224182,
+                  -0.3843207359313965,
+                  -0.15580685436725616,
+                  -0.28747814893722534,
+                  -0.15580685436725616,
+                  -0.15580685436725616,
+                  -0.2354065626859665,
+                  -0.2354065626859665,
+                  -0.2354065626859665,
+                  -0.2354065626859665,
+                  -0.12995609641075134,
+                  -0.12995609641075134,
+                  -0.026445796713232994,
+                  -0.09609837085008621,
+                  -0.09609837085008621,
+                  -0.09609837085008621,
+                  -0.09609837085008621,
+                  2.1034135357908066
+                ],
+                [
+                  -2.0908470153808594,
+                  -2.0876877307891846,
+                  -0.6054672002792358,
+                  -0.47077351808547974,
+                  -1.024516224861145,
+                  -2.0840253829956055,
+                  12.145673751831055,
+                  -0.2829578220844269,
+                  -0.5199882388114929,
+                  -0.2829578220844269,
+                  -0.38155707716941833,
+                  -0.6546820998191833,
+                  -0.2930721938610077,
+                  -0.2930721938610077,
+                  -0.2930721938610077,
+                  -0.2930721938610077,
+                  -0.3921312987804413,
+                  -0.15839913487434387,
+                  -0.29339399933815,
+                  -0.15839913487434387,
+                  -0.15839913487434387,
+                  -0.23683233559131622,
+                  -0.23683233559131622,
+                  -0.23683233559131622,
+                  -0.23683233559131622,
+                  -0.13346049189567566,
+                  -0.13346049189567566,
+                  -0.025079093873500824,
+                  -0.09815831482410431,
+                  -0.09815831482410431,
+                  -0.09815831482410431,
+                  -0.09815831482410431,
+                  2.1018470679842136
+                ],
+                [
+                  -0.523246169090271,
+                  -0.51631760597229,
+                  -1.0319331884384155,
+                  -0.7613859176635742,
+                  1.1242159605026245,
+                  -0.5077516436576843,
+                  -0.5072759985923767,
+                  3.482348680496216,
+                  2.2169148921966553,
+                  3.482348680496216,
+                  2.649869203567505,
+                  1.946883201599121,
+                  3.16353702545166,
+                  3.16353702545166,
+                  3.16353702545166,
+                  3.16353702545166,
+                  -1.4793976545333862,
+                  -0.3523949682712555,
+                  -0.660447359085083,
+                  -0.3523949682712555,
+                  -0.3523949682712555,
+                  -1.2249382734298706,
+                  -1.2249382734298706,
+                  -1.2249382734298706,
+                  -1.2249382734298706,
+                  -0.24059811234474182,
+                  -0.24059811234474182,
+                  -0.07029692828655243,
+                  -0.7823807001113892,
+                  -0.7823807001113892,
+                  -0.7823807001113892,
+                  -0.7823807001113892,
+                  0.5073466645329774
+                ],
+                [
+                  -0.10540357977151871,
+                  -0.10217374563217163,
+                  -1.2428357601165771,
+                  -0.3687782287597656,
+                  1.4762498140335083,
+                  -0.08954796940088272,
+                  -0.08697711676359177,
+                  0,
+                  -0.048297833651304245,
+                  0,
+                  -0.6839508414268494,
+                  -0.9291031956672668,
+                  -0.4346078038215637,
+                  -0.4346078038215637,
+                  -0.4346078038215637,
+                  -0.4346078038215637,
+                  1.4377247095108032,
+                  3.0431344509124756,
+                  2.171792984008789,
+                  3.0431344509124756,
+                  3.0431344509124756,
+                  -0.048297833651304245,
+                  -0.048297833651304245,
+                  -0.048297833651304245,
+                  -0.048297833651304245,
+                  -0.8591596484184265,
+                  -0.8591596484184265,
+                  -0.31181859970092773,
+                  -0.6839508414268494,
+                  -0.6839508414268494,
+                  -0.6839508414268494,
+                  -0.6839508414268494,
+                  0.07054317264764745
+                ],
+                [
+                  -0.1927313506603241,
+                  -0.18630121648311615,
+                  -0.4487525522708893,
+                  -0.02649344690144062,
+                  -0.12798742949962616,
+                  -0.18441598117351532,
+                  -0.17866456508636475,
+                  -1.0653448104858398,
+                  1.6656322479248047,
+                  -1.0653448104858398,
+                  -1.1013767719268799,
+                  1.2280749082565308,
+                  -0.053366370499134064,
+                  -0.053366370499134064,
+                  -0.053366370499134064,
+                  -0.053366370499134064,
+                  -0.4460189640522003,
+                  0,
+                  -0.40039682388305664,
+                  0,
+                  0,
+                  2.8083815574645996,
+                  2.8083815574645996,
+                  2.8083815574645996,
+                  2.8083815574645996,
+                  -0.40039682388305664,
+                  -0.40039682388305664,
+                  -0.14892123639583588,
+                  -0.026005763560533524,
+                  -0.026005763560533524,
+                  -0.026005763560533524,
+                  -0.026005763560533524,
+                  0.15848080253222124
+                ],
+                [
+                  -0.07571066170930862,
+                  -0.07550763338804245,
+                  2.1544339656829834,
+                  -0.6362481713294983,
+                  -1.5778917074203491,
+                  -0.07378820329904556,
+                  -0.07353350520133972,
+                  -0.40506237745285034,
+                  -0.7458446621894836,
+                  -0.40506237745285034,
+                  -0.5549072623252869,
+                  2.0448200702667236,
+                  -0.004461071919649839,
+                  -0.004461071919649839,
+                  -0.004461071919649839,
+                  -0.004461071919649839,
+                  1.85912024974823,
+                  -0.7815400958061218,
+                  2.008965253829956,
+                  -0.7815400958061218,
+                  -0.7815400958061218,
+                  -0.3398776352405548,
+                  -0.3398776352405548,
+                  -0.3398776352405548,
+                  -0.3398776352405548,
+                  2.793900728225708,
+                  2.793900728225708,
+                  -13.330648422241211,
+                  -0.10073062032461166,
+                  -0.10073062032461166,
+                  -0.10073062032461166,
+                  -0.10073062032461166,
+                  0.07792190265402457
+                ],
+                [
+                  -0.06831995397806168,
+                  -0.06561823934316635,
+                  0.1889037936925888,
+                  -0.24234682321548462,
+                  -0.8353243470191956,
+                  -0.05591008812189102,
+                  -0.05370103940367699,
+                  -0.15427272021770477,
+                  -0.3700424134731293,
+                  -0.15427272021770477,
+                  -0.32125696539878845,
+                  0.039474260061979294,
+                  -0.010710189118981361,
+                  -0.010710189118981361,
+                  -0.010710189118981361,
+                  -0.010710189118981361,
+                  -0.11597607284784317,
+                  -0.33885374665260315,
+                  0.05724132061004639,
+                  -0.33885374665260315,
+                  -0.33885374665260315,
+                  -0.16366297006607056,
+                  -0.16366297006607056,
+                  -0.16366297006607056,
+                  -0.16366297006607056,
+                  0.45384055376052856,
+                  0.45384055376052856,
+                  13.399517059326172,
+                  -0.1138814315199852,
+                  -0.1138814315199852,
+                  -0.1138814315199852,
+                  -0.1138814315199852,
+                  -0.553681572360218
+                ],
+                [
+                  -0.11321242898702621,
+                  -0.10888569802045822,
+                  -0.5993266701698303,
+                  -0.40889716148376465,
+                  0.960550844669342,
+                  -0.09230346977710724,
+                  -0.08877995610237122,
+                  -0.4668755531311035,
+                  -0.4820922315120697,
+                  -0.4668755531311035,
+                  1.977838158607483,
+                  -0.6705508232116699,
+                  -0.2987706661224365,
+                  -0.2987706661224365,
+                  -0.2987706661224365,
+                  -0.2987706661224365,
+                  1.575756549835205,
+                  -0.6556914448738098,
+                  -0.848855197429657,
+                  -0.6556914448738098,
+                  -0.6556914448738098,
+                  -0.007763017900288105,
+                  -0.007763017900288105,
+                  -0.007763017900288105,
+                  -0.007763017900288105,
+                  -0.15960034728050232,
+                  -0.15960034728050232,
+                  -0.04925158619880676,
+                  2.4681527614593506,
+                  2.4681527614593506,
+                  2.4681527614593506,
+                  2.4681527614593506,
+                  -0.10104218118891359
+                ]
+              ]
+            }
+          }
+        }
+      }
+    },
+    "intentDomains": {},
+    "extraSentences": [
+      [
+        "en",
+        "hello"
+      ],
+      [
+        "en",
+        "hi"
+      ],
+      [
+        "en",
+        "how are you"
+      ],
+      [
+        "en",
+        "fine "
+      ],
+      [
+        "en",
+        "thankyou "
+      ],
+      [
+        "en",
+        "tell me about your tours"
+      ],
+      [
+        "en",
+        "what destinations do you offer"
+      ],
+      [
+        "en",
+        "can you recommend a vacation package"
+      ],
+      [
+        "en",
+        "give me best tour to visit"
+      ],
+      [
+        "en",
+        "how can I book a tour"
+      ],
+      [
+        "en",
+        "how can I cancel a tour booking"
+      ],
+      [
+        "en",
+        "can you provide your company contact number"
+      ]
+    ]
+  },
+  "ner": {
+    "settings": {
+      "tag": "ner",
+      "entityPreffix": "%",
+      "entitySuffix": "%"
+    },
+    "rules": {}
+  },
+  "nlgManager": {
+    "settings": {
+      "tag": "nlg-manager"
+    },
+    "responses": {
+      "en": {
+        "greeting": [
+          {
+            "answer": "Hello!"
+          }
+        ],
+        "health": [
+          {
+            "answer": "I am fine and you "
+          }
+        ],
+        "reply": [
+          {
+            "answer": "Thankyou!"
+          }
+        ],
+        "finish_conv": [
+          {
+            "answer": "Thankyou! for your time , have a nice day"
+          }
+        ],
+        "tour_info": [
+          {
+            "answer": "We offer a variety of tours to amazing destinations,but most of the customer choose poonHill treeking packages nowdays"
+          },
+          {
+            "answer": "Our tours cover domestic  locations so you can choose Treeking , History Site and many more."
+          }
+        ],
+        "tour_recommendation": [
+          {
+            "answer": "Based on your preferences, I recommend our 'Chitwan National Park' package."
+          }
+        ],
+        "best_tour": [
+          {
+            "answer": "as an average, our 'Chitwan national parks' and poonHill packages tour is highly recommended."
+          }
+        ],
+        "tour_booking": [
+          {
+            "answer": "To book a tour, you can visit our website or contact our customer service or you can send inquery message"
+          }
+        ],
+        "tour_cancel": [
+          {
+            "answer": "You can easily cancel a tour online through our Tour booking website or contact through company"
+          }
+        ],
+        "contact_info": [
+          {
+            "answer": "yes sure here is the contact number 9840294946"
+          }
+        ]
+      }
+    }
+  },
+  "actionManager": {
+    "settings": {
+      "tag": "action-manager"
+    },
+    "actions": {}
+  },
+  "slotManager": {}
+}
