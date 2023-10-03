@@ -254,3 +254,57 @@ exports.getFilteredAndSortedTours = async (req, res) => {
     res.status(500).json({ error: "An error occurred while fetching tours" });
   }
 };
+
+//seudo code for this algorithmm//
+
+/*function getFilteredAndSortedTours(req, res):
+  try:
+    // Parse query parameters
+    priceRange = req.query.priceRange
+    categoryId = req.query.categoryId
+    city = req.query.city
+    sortBy = req.query.sortBy
+
+    // Initialize an empty query object
+    query = {}
+
+    // Parse price range
+    if priceRange is not null:
+      [minPrice, maxPrice] = parsePriceRange(priceRange)
+      query.price = { $gte: minPrice, $lte: maxPrice }
+
+    // Set category filter
+    if categoryId is not null:
+      query.category = categoryId
+
+    // Set city filter (case-insensitive)
+    if city is not null:
+      query.city = { $regex: city, $options: "i" }
+
+    // Initialize sorting criteria
+    sort = {}
+
+    // Determine sorting order
+    if sortBy is "priceLowToHigh":
+      sort.price = 1
+    else if sortBy is "priceHighToLow":
+      sort.price = -1
+
+    // Fetch tours from the database based on filters and sorting
+    tours = await queryToursFromDatabase(query, sort)
+
+    // Send the JSON response
+    res.json(tours)
+  catch error:
+    logError("Error fetching tours:", error)
+    res.status(500).json({ error: "An error occurred while fetching tours" })
+
+function parsePriceRange(priceRange):
+  // Split the price range string into min and max values
+  [minPrice, maxPrice] = priceRange.split("-")
+  return [parseInt(minPrice), parseInt(maxPrice)]
+
+function queryToursFromDatabase(query, sort):
+  // Connect to the database and query tours using the provided query and sorting criteria
+  // Return the list of tours
+*/

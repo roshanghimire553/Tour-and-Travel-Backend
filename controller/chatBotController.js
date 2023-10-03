@@ -6,7 +6,11 @@ const manager = new NlpManager({ languages: ["en"] });
 // Train the NlpManager with sample data
 manager.addDocument("en", "hello", "greeting");
 manager.addDocument("en", "hi", "greeting");
-manager.addAnswer("en", "greeting", "Hello!");
+manager.addAnswer(
+  "en",
+  "greeting",
+  "Hello! To get more information, please enter one of the following  1 for Tour Information 2 for Contact Information"
+);
 
 manager.addDocument("en", "how are you", "health");
 manager.addAnswer("en", "health", "I am fine and you ");
@@ -21,14 +25,14 @@ manager.addAnswer(
   "Thankyou! for your time , have a nice day"
 );
 
-manager.addDocument("en", "tell me about your tours", "tour_info");
-manager.addAnswer(
-  "en",
-  "tour_info",
-  "We offer a variety of tours to amazing destinations,but most of the customer choose poonHill treeking packages nowdays"
-);
+// manager.addDocument("en", "tell me about your tours", "tour_info");
+// manager.addAnswer(
+//   "en",
+//   "tour_info",
+//   "We offer a variety of tours to amazing destinations,but most of the customer choose poonHill treeking packages nowdays"
+// );
 
-manager.addDocument("en", "what destinations do you offer", "tour_info");
+manager.addDocument("en", "1", "tour_info");
 manager.addAnswer(
   "en",
   "tour_info",
@@ -69,11 +73,7 @@ manager.addAnswer(
   "You can easily cancel a tour online through our Tour booking website or contact through company"
 );
 
-manager.addDocument(
-  "en",
-  "can you provide your company contact number",
-  "contact_info"
-);
+manager.addDocument("en", "2", "contact_info");
 manager.addAnswer(
   "en",
   "contact_info",
